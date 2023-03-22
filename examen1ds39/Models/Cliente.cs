@@ -16,16 +16,20 @@ public partial class Cliente
     [Column("nombres")]
     [StringLength(30)]
     [Unicode(false)]
+    [Required]
     public string? Nombres { get; set; }
 
     [Column("apellidos")]
     [StringLength(30)]
     [Unicode(false)]
+    [Required(ErrorMessage ="El campo es obligatorio")]
     public string? Apellidos { get; set; }
 
     [Column("dui")]
     [StringLength(10)]
     [Unicode(false)]
+    [Required(ErrorMessage = "El campo es obligatorio")]
+    [RegularExpression(@"^\d{8}-\d{1}$",ErrorMessage ="Ingrese dui con el formato correcto")]
     public string? Dui { get; set; }
 
     [Column("direccion")]
@@ -36,5 +40,7 @@ public partial class Cliente
     [Column("nit")]
     [StringLength(17)]
     [Unicode(false)]
+    [Required(ErrorMessage = "El campo es obligatorio")]
+    [RegularExpression(@"^\d{4}-\d{6}-\d{3}-\d{1}$", ErrorMessage = "Ingrese nit con el formato correcto")]
     public string? Nit { get; set; }
 }

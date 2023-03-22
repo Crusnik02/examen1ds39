@@ -1,0 +1,86 @@
+﻿@model examen1ds39.Models.Cliente
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Cliente</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Nombres" class="control-label"></label>
+                <input asp-for="Nombres" class="form-control" />
+                <span asp-validation-for="Nombres" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Apellidos" class="control-label"></label>
+                <input asp-for="Apellidos" class="form-control" />
+                <span asp-validation-for="Apellidos" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Dui" class="control-label"></label>
+                <input asp-for="Dui" id="txtDui" class="form-control" />
+                <span asp-validation-for="Dui" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Nit" class="control-label"></label>
+                <input asp-for="Nit" id="txtDui" class="form-control" />
+                <span asp-validation-for="Nit" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Direccion" class="control-label"></label>
+                <input asp-for="Direccion" class="form-control" />
+                <span asp-validation-for="Direccion" class="text-danger"></span>
+            </div>
+          
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script type="text/javascript">
+        $('document').ready(function () {
+            $("#txtDui").change(function () {
+                var isDUI = function (str) {
+                    var regex = /(^\d{8})-(\d$)/,
+                        parts = str.match(regex);
+                    // verficar formato y extraer digitos junto al digito verificador
+                    if (parts !== null) {
+                        var digits = parts[1],
+                            dig_ve = parseInt(parts[2], 10),
+                            sum = 0;
+                        // sumar producto de posiciones y digitos
+                        for (var i = 0, l = digits.length; i < l; i++) {
+                            var d = parseInt(digits[i], 10);
+                            sum += (9 - i) * d;
+                        }
+                        return dig_ve === (10 - (sum % 10)) % 10;
+                    } else {
+                        return false;
+                    }
+                };
+
+                if (isDUI($("#txtDui").val())) {
+                    alert("El formato del dui no es valido");
+                    $("#txtDui").val("");
+                }
+
+            });
+        });
+
+    </script>
+}

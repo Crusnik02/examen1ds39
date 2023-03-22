@@ -1,0 +1,53 @@
+﻿@model examen1ds39.Models.Usuario
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Registro de Usuario</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="NombreUsuario" class="control-label"></label>
+                <input asp-for="NombreUsuario" class="form-control" />
+                <span asp-validation-for="NombreUsuario" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NivelUsuario" class="control-label"></label>
+                <input asp-for="NivelUsuario" id="txtNivelUsuario" class="form-control" />
+                <span asp-validation-for="NivelUsuario" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Contra" class="control-label"></label>
+                <input asp-for="Contra"  class="form-control" />
+                <span asp-validation-for="Contra" class="text-danger"></span>
+            </div>
+            
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script type="text/javascript">
+        $('document').ready(function() {
+            $("#txtNivelUsuario").change(function() {
+
+                if ($("#txtNivelUsuario").val().toUpperCase() !== 'CLIENTE' &&
+                    $("#txtNivelUsuario").val().toUpperCase() !== 'ADMINISTRADOR') {
+                        alert("Ingrese el nivel de usuario como Cliente o Administrador");
+                    $("#txtNivelUsuario").val("");
+                    }
+            });
+        })
+    </script>
+}
