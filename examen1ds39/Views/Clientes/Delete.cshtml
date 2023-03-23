@@ -4,9 +4,8 @@
     ViewData["Title"] = "Delete";
 }
 
-<h1>Delete</h1>
 
-<h3>Are you sure you want to delete this?</h3>
+
 <div>
     <h4>Cliente</h4>
     <hr />
@@ -43,9 +42,38 @@
         </dd>
     </dl>
     
-    <form asp-action="Delete">
+    <form asp-action="Delete" id="formDelete">
         <input type="hidden" asp-for="CodCliente" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <input type="submit" id="btnEliminar" value="Eliminar" class="btn btn-danger" /> |
         <a asp-action="Index">Back to List</a>
     </form>
 </div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script type="text/javascript">
+        $("document").ready(function() {
+            $("#btnEliminar").on('click',function (e) {
+                e.preventDefault();
+                var form = $(this).parents('form');
+                Swal.fire({
+                    title: 'Seguro de eliminar a este cliente?',
+                    showCancelButton: true,
+                    confirmButtonText: 'Eliminar',
+                    cancelButtonText: `Cancelar`,
+                }).then((result) => {
+                    /* Read more about isConfirmed, isDenied below */
+                    console.log(result.isConfirmed);
+                    if (result.isConfirmed) {
+                        form.submit();
+                        return true;
+                    }  else {
+                        return false;
+                    }
+                })
+
+            });
+        });
+    </script>
+}
